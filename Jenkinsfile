@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             additionalBuildArgs  '-t svp-jenkins'
-            args '--name svp-jenkins -u 0:0 --network=SVP_network -v /var/run/docker.sock:/var/run/docker.sock'
+            args '--name svp-jenkins -u 0:0 --network=svp_network -v /var/run/docker.sock:/var/run/docker.sock'
         }    
     }
     
@@ -26,9 +26,9 @@ pipeline {
             }
             
             steps {
-                sh "docker build -t middle_image --build-arg NEXUS_CREDS=${NEXUS_CREDS} --build-arg BUILD_NUMBER=${BUILD_NUMBER} --network=SVP_network -f ./alpine_linux/Dockerfile ."
+                sh "docker build -t middle_image --build-arg NEXUS_CREDS=${NEXUS_CREDS} --build-arg BUILD_NUMBER=${BUILD_NUMBER} --network=svp_network -f ./alpine_linux/Dockerfile ."
                 
-                sh "docker run -d --name build_image --network=SVP_network middle_image"
+                sh "docker run -d --name build_image --network=svp_network middle_image"
                 
                 sh """
                     res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://build_image:8888/version | jq '. | length'`
