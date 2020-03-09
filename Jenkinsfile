@@ -1,8 +1,8 @@
 pipeline {
     agent {
         dockerfile {
-            additionalBuildArgs  '-t SVP-jenkins'
-            args '--name SVP-jenkins -u 0:0 --network=SVP-network -v /var/run/docker.sock:/var/run/docker.sock'
+            additionalBuildArgs  '-t svp-jenkins'
+            args '--name svp-jenkins -u 0:0 --network=SVP-network -v /var/run/docker.sock:/var/run/docker.sock'
         }    
     }
     
