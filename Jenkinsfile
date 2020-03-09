@@ -26,9 +26,9 @@ pipeline {
             }
             
             steps {
-                sh "docker build -t middle_image --build-arg NEXUS_CREDS=${NEXUS_CREDS} --build-arg BUILD_NUMBER=${BUILD_NUMBER} --network=SVP-network -f ./alpine_linux/Dockerfile ."
+                sh "docker build -t middle_image --build-arg NEXUS_CREDS=${NEXUS_CREDS} --build-arg BUILD_NUMBER=${BUILD_NUMBER} --network=SVP_network -f ./alpine_linux/Dockerfile ."
                 
-                sh "docker run -d --name build_image --network=SVP-network middle_image"
+                sh "docker run -d --name build_image --network=SVP_network middle_image"
                 
                 sh """
                     res=`curl -s -H "Content-Type: application/json" -d '{"text":"ths is a really really really important thing this is"}' http://build_image:8888/version | jq '. | length'`
